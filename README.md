@@ -3,14 +3,12 @@
 **Procedure of running this project :**<br/>
 
 -   Clone this repo
--   copy `.env.example` and rename with `.env`, then put your `api-key`, `secret-key`, [set base url](https://api.unsplash.com)
 -   Run `npm run android/ios`
 
 **Key-Features :**<br/>
 
--   Image list with infinity scroll features
--   Download specific image at unlimited time
--   caching features of image
+-   Render list of book-list
+-   Delete specific item into list
 
 **Futures implemented features :**<br/>
 

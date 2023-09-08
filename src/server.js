@@ -35,6 +35,39 @@ export function MakeServer({environment = 'development'} = {}) {
                 }
                 return schema.blogPosts.find(req.params.id);
             });
+
+            // Custom route handler for book search
+            this.get('api/books/search', (schema, request) => {
+                const searchText = request.queryParams.text;
+
+                if (!searchText) {
+                    // If no search text is provided, return an empty array
+                    return [];
+                }
+
+                // Filter books based on the search text (case-insensitive)
+                const matchingBooks = schema.blogPosts.all().filter(book => {
+                    return book.title
+                        .toLowerCase()
+                        .includes(searchText.toLowerCase());
+                });
+
+                return matchingBooks;
+            });
+
+            // Delete item from list
+            this.delete('api/books/delete/:id', (schema, request) => {
+                const itemId = request.params.id;
+                const findItem = schema.blogPosts.find(itemId);
+
+                if (!findItem) {
+                    return new Response(500, {
+                        errors: ['Server did not respond'],
+                    });
+                }
+
+                return schema.blogPosts.find(itemId).destroy();
+            });
         },
     });
 

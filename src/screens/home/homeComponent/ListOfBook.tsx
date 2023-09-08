@@ -16,6 +16,7 @@ interface Props {
         categories: string | undefined,
     };
     index: number;
+    // deleteCallBack: () => void;
 }
 
 const ListOfBook = ({item}: Props) => {
@@ -27,15 +28,42 @@ const ListOfBook = ({item}: Props) => {
         });
     };
 
+    /** Method to update book */
+    // const deleteBook = async () => {
+    //     // api/books/delete/:id
+    //     try {
+    //         await axios.delete(`api/books/delete/${item.id}`);
+    //         // after delete successfully
+    //         if (typeof deleteCallBack === 'function') {
+    //             deleteCallBack();
+    //         }
+    //     } catch (error) {
+    //         if (__DEV__) {
+    //             console.log(error, 'from catch errors');
+    //         }
+    //     }
+    // };
+
     return (
         <TouchableOpacity
             style={[styles.container]}
             activeOpacity={0.7}
             onPress={navigateToBookPreview}>
+            {/* <View style={styles.buttonContainer}>
+                <TouchableOpacity
+                    style={[styles.buttonStyles, styles.deleteBtn]}
+                    activeOpacity={0.7}
+                    onPress={deleteBook}>
+                    <Text style={[commonStyles.smallTextStyles, styles.btnTxt]}>
+                        Delete
+                    </Text>
+                </TouchableOpacity>
+            </View> */}
             <Text style={[commonStyles.largeTextStyles]}>{item.title}</Text>
             <Text style={[commonStyles.smallTextStyles, styles.desTxt]}>
                 {item.shortDescription}
             </Text>
+
             <View style={[styles.authorContainer]}>
                 {item?.authors?.length
                     ? //@ts-ignore
@@ -86,5 +114,27 @@ const styles = StyleSheet.create({
     },
     authorTxt: {
         fontWeight: 'bold',
+    },
+    buttonContainer: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'flex-end',
+        marginTop: 5,
+        marginHorizontal: 5,
+    },
+    buttonStyles: {
+        backgroundColor: colors.primary,
+        alignItems: 'center',
+        justifyContent: 'center',
+        paddingHorizontal: 40,
+        paddingVertical: 10,
+    },
+    btnTxt: {
+        fontSize: fonts.size.font14,
+        textAlign: 'center',
+        color: colors.black,
+    },
+    deleteBtn: {
+        backgroundColor: colors.textDanger,
     },
 });

@@ -13,6 +13,7 @@ const colors = {
     black: '#000000',
     gray: '#F9F9F9',
     skeletonBg: '#999',
+    textDanger: '#D9534F',
 };
 
 export default colors;

@@ -11,6 +11,8 @@ import {
     ScrollView,
     StyleSheet,
     Text,
+    ToastAndroid,
+    TouchableOpacity,
     View,
 } from 'react-native';
 import React, {useEffect, useState} from 'react';
@@ -19,6 +21,9 @@ import {NativeStackScreenProps} from '@react-navigation/native-stack';
 import axios from 'axios';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import commonStyles from '../../styles/commonStyles';
+import colors from '../../theme/colors';
+import fonts from '../../theme/fonts';
+import {navigationRef} from '../../navigation/RootNavigation';
 
 // get scree Dimensions
 const HEIGHT = Dimensions.get('screen').height;
@@ -83,17 +88,84 @@ const BookViewer = ({route}: Props) => {
 
     if (loading) {
         return (
-            <View>
-                <Text>loading...</Text>
+            <View style={[commonStyles.pageContentCenter]}>
+                <ActivityIndicator size={'large'} />
             </View>
         );
     }
+
+    // if any item is not found
+    if (!Object.keys(book)?.length) {
+        return (
+            <View style={[commonStyles.pageContentCenter]}>
+                <Text>No item is found!</Text>
+            </View>
+        );
+    }
+
+    /** Method to update book */
+    const editBook = () => {
+        console.log(book, 'book');
+    };
+
+    /** Method to update book */
+    const deleteBook = async () => {
+        // api/books/delete/:id
+        try {
+            await axios.delete(`api/books/delete/${book.id}`);
+            ToastAndroid.showWithGravityAndOffset(
+                'Deleted successfully',
+                ToastAndroid.LONG,
+                ToastAndroid.BOTTOM,
+                25,
+                50,
+            );
+            return navigationRef.goBack();
+        } catch (error) {
+            ToastAndroid.showWithGravityAndOffset(
+                'Something went wrong. Please try again later',
+                ToastAndroid.LONG,
+                ToastAndroid.BOTTOM,
+                25,
+                50,
+            );
+            if (__DEV__) {
+                console.log(error, 'from catch errors');
+            }
+        }
+    };
 
     return (
         <SafeAreaView style={styles.container}>
             <ScrollView
                 showsVerticalScrollIndicator={false}
                 style={styles.scrollView}>
+                <View style={styles.buttonContainer}>
+                    <TouchableOpacity
+                        activeOpacity={0.7}
+                        onPress={editBook}
+                        style={styles.buttonStyles}>
+                        <Text
+                            style={[
+                                commonStyles.smallTextStyles,
+                                styles.btnTxt,
+                            ]}>
+                            Edit
+                        </Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity
+                        style={[styles.buttonStyles, styles.deleteBtn]}
+                        activeOpacity={0.7}
+                        onPress={deleteBook}>
+                        <Text
+                            style={[
+                                commonStyles.smallTextStyles,
+                                styles.btnTxt,
+                            ]}>
+                            Delete
+                        </Text>
+                    </TouchableOpacity>
+                </View>
                 <View style={styles.itemContainer}>
                     <Text style={[commonStyles.largeTextStyles]}>
                         {book?.title || 'title'}
@@ -176,5 +248,27 @@ const styles = StyleSheet.create({
     },
     publicationDateTxt: {
         marginTop: 5,
+    },
+    buttonContainer: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'space-between',
+        marginTop: 5,
+        marginHorizontal: 5,
+    },
+    buttonStyles: {
+        backgroundColor: colors.primary,
+        alignItems: 'center',
+        justifyContent: 'center',
+        paddingHorizontal: 40,
+        paddingVertical: 10,
+    },
+    btnTxt: {
+        fontSize: fonts.size.font14,
+        textAlign: 'center',
+        color: colors.black,
+    },
+    deleteBtn: {
+        backgroundColor: colors.textDanger,
     },
 });

@@ -4,6 +4,12 @@ import {NavigationContainer, DefaultTheme} from '@react-navigation/native';
 import {SafeAreaProvider} from 'react-native-safe-area-context';
 import RootStackNav from './src/navigation/stackNavigation/RootStackNav';
 import {navigationRef} from './src/navigation/RootNavigation';
+import {MakeServer} from './src/server';
+
+// initialized mirage-server
+if (__DEV__) {
+    MakeServer({environment: 'development'});
+}
 
 function App() {
     return (
