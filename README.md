@@ -3,12 +3,15 @@
 **Procedure of running this project :**<br/>
 
 -   Clone this repo
+-   run `npm i` in your repo
 -   Run `npm run android/ios`
 
 **Key-Features :**<br/>
 
 -   Render list of book-list
--   Delete specific item into list
+-   Add specific item into list
+-   Edit/Update item from existing list
+-   Delete item from existing list
 
 **Futures implemented features :**<br/>
 

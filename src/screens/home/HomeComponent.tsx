@@ -150,7 +150,7 @@ const HomeComponent = ({navigation}: Props) => {
                             keyExtractor={item => item.id + generateUUID()}
                             getItemCount={data => data.length} // Provide the number of items in your data
                             getItem={(data, index) => data[index]} // Provide the item for a given index
-                            showsHorizontalScrollIndicator={false}
+                            showsVerticalScrollIndicator={false}
                             keyboardShouldPersistTaps={'always'}
                         />
                     </>
