@@ -5,20 +5,22 @@ import {
     VirtualizedList,
     TextInput,
     ActivityIndicator,
+    TouchableOpacity,
 } from 'react-native';
 import React, {useState, useEffect, useRef} from 'react';
 import {SafeAreaView} from 'react-native-safe-area-context';
-// import {MakeServer} from '../../server';
 import commonStyles from '../../styles/commonStyles';
 import ListOfBook from './homeComponent/ListOfBook';
 import axios from 'axios';
 import {generateUUID} from '../../utils/ReusableMethod';
+import colors from '../../theme/colors';
+import fonts from '../../theme/fonts';
+import {RootStackParamList} from '../../navigation/stackNavigation/RootStackNav';
+import {NativeStackScreenProps} from '@react-navigation/native-stack';
 
-// if (__DEV__) {
-//     MakeServer({environment: 'development'});
-// }
+type Props = NativeStackScreenProps<RootStackParamList, 'Home'>;
 
-const HomeComponent = ({navigation}: any) => {
+const HomeComponent = ({navigation}: Props) => {
     let [booksData, setBooksData] = useState<any>([]);
     let [rootData, setRootData] = useState<any>([]);
     const [loading, setLoading] = useState<Boolean>(true);
@@ -102,6 +104,9 @@ const HomeComponent = ({navigation}: any) => {
         }
     };
 
+    // add blog-post
+    const addPost = () => navigation.navigate('addBook');
+
     if (loading) {
         return (
             <View style={[commonStyles.pageContentCenter]}>
@@ -112,13 +117,21 @@ const HomeComponent = ({navigation}: any) => {
 
     return (
         <SafeAreaView style={styles.container}>
-            <View>
+            <View style={[styles.headerContainer]}>
                 <TextInput
                     style={styles.input}
                     onChangeText={onChangeTextMethod}
                     value={text}
                     placeholder="Search you books..."
                 />
+                <TouchableOpacity
+                    style={[styles.buttonStyles, styles.addBtn]}
+                    activeOpacity={0.7}
+                    onPress={addPost}>
+                    <Text style={[commonStyles.smallTextStyles, styles.btnTxt]}>
+                        Add book
+                    </Text>
+                </TouchableOpacity>
             </View>
             {!searchLoader ? (
                 booksData?.length ? (
@@ -138,6 +151,7 @@ const HomeComponent = ({navigation}: any) => {
                             getItemCount={data => data.length} // Provide the number of items in your data
                             getItem={(data, index) => data[index]} // Provide the item for a given index
                             showsHorizontalScrollIndicator={false}
+                            keyboardShouldPersistTaps={'always'}
                         />
                     </>
                 ) : (
@@ -169,5 +183,28 @@ const styles = StyleSheet.create({
         margin: 12,
         borderWidth: 1,
         padding: 10,
+        width: '60%',
+    },
+    headerContainer: {
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        alignItems: 'center',
+    },
+    buttonStyles: {
+        backgroundColor: colors.primary,
+        alignItems: 'center',
+        justifyContent: 'center',
+        paddingHorizontal: 25,
+        height: 40,
+        marginHorizontal: 10,
+    },
+    btnTxt: {
+        fontSize: fonts.size.font14,
+        textAlign: 'center',
+        color: colors.white,
+        opacity: 1,
+    },
+    addBtn: {
+        backgroundColor: colors.btnPrimary,
     },
 });

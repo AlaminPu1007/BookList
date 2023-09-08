@@ -40,7 +40,7 @@ const BookViewer = ({route}: Props) => {
     const params: routerParams | undefined = route.params;
     const {itemId = ''} = params ?? {};
 
-    let [book, setBook] = useState<any>({});
+    const [book, setBook] = useState<any>({});
     const [loading, setLoading] = useState<Boolean>(false);
     const [imageLoader, setImageLoader] = useState<boolean>(true);
 
@@ -105,7 +105,10 @@ const BookViewer = ({route}: Props) => {
 
     /** Method to update book */
     const editBook = () => {
-        console.log(book, 'book');
+        // @ts-ignore
+        return navigationRef.navigate('addBook', {
+            itemId: book.id || null,
+        });
     };
 
     /** Method to update book */
@@ -266,7 +269,8 @@ const styles = StyleSheet.create({
     btnTxt: {
         fontSize: fonts.size.font14,
         textAlign: 'center',
-        color: colors.black,
+        color: colors.white,
+        opacity: 1,
     },
     deleteBtn: {
         backgroundColor: colors.textDanger,

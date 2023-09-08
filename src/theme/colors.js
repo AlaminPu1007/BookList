@@ -14,6 +14,7 @@ const colors = {
     gray: '#F9F9F9',
     skeletonBg: '#999',
     textDanger: '#D9534F',
+    btnPrimary: '#2FAA4B',
 };
 
 export default colors;

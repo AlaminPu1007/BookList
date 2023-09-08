@@ -36,6 +36,13 @@ export function MakeServer({environment = 'development'} = {}) {
                 return schema.blogPosts.find(req.params.id);
             });
 
+            // post method or add method of blog-post
+            this.post('api/books/create', (schema, request) => {
+                let items = JSON.parse(request.requestBody);
+
+                return schema.blogPosts.create(items);
+            });
+
             // Custom route handler for book search
             this.get('api/books/search', (schema, request) => {
                 const searchText = request.queryParams.text;
@@ -67,6 +74,15 @@ export function MakeServer({environment = 'development'} = {}) {
                 }
 
                 return schema.blogPosts.find(itemId).destroy();
+            });
+
+            // update specific post
+            this.patch('api/books/update/:id', (schema, request) => {
+                let items = JSON.parse(request.requestBody);
+                let id = request.params.id;
+                let book = schema.blogPosts.find(id);
+
+                return book.update(items);
             });
         },
     });
