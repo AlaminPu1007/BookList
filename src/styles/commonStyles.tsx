@@ -28,4 +28,11 @@ export default StyleSheet.create({
         fontWeight: '400',
         color: colors.textPrimary,
     },
+    // Large text styles for our application
+    largeTextStyles: {
+        fontSize: fonts.size.font20,
+        fontFamily: fonts.type.robotoRegular,
+        fontWeight: '400',
+        color: colors.textPrimary,
+    },
 });

@@ -6,7 +6,7 @@ import BookViewer from '../../screens/bookView';
 
 export type RootStackParamList = {
     Home: undefined,
-    bookPreview: {itemId: string, imageUrl: string} | undefined,
+    bookPreview: {itemId: string} | undefined,
 };
 
 const Stack = createNativeStackNavigator<RootStackParamList>();

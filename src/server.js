@@ -12,13 +12,13 @@ export function MakeServer({environment = 'test'} = {}) {
         environment,
 
         models: {
-            user: Model,
+            books: Model,
         },
 
         routes() {
             this.namespace = 'api';
 
-            this.get('/users', schema => {
+            this.get('/books', schema => {
                 return book_list;
             });
         },
