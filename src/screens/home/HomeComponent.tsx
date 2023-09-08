@@ -36,7 +36,7 @@ const HomeComponent = () => {
     const getBooksList = async () => {
         try {
             const res = await axios.get('api/books');
-            setBooksData(res?.data || []);
+            setBooksData(res?.data?.blogPosts || []);
 
             setLoading(prv => !prv);
         } catch (error) {
